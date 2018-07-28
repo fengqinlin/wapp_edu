@@ -10,6 +10,12 @@ Page({
         interval: 3000,
         duration: 1000,
         circular: !0,
+	    images: [
+            '../../assets/images/banner/banner1.jpg',
+            '../../assets/images/banner/banner2.jpg',
+            '../../assets/images/banner/banner3.jpg',
+            '../../assets/images/banner/banner4.jpg',
+	    ],
         goods: {},
         prompt: {
             hidden: !0,
@@ -23,7 +29,7 @@ Page({
         this.goods = App.HttpResource('/goods/:id', {id: '@id'})
         this.classify = App.HttpResource('/classify/:id', {id: '@id'})
 
-        this.getBanners()
+	      //this.getBanners()
         this.getClassify()
     },
     initData() {
