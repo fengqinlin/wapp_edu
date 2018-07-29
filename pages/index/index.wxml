@@ -1,5 +1,6 @@
 <import src="../common/nav.wxml"/>
 <import src="../common/list.wxml"/>
+<import src="../common/cell.wxml" />
 
 <swiper class="swiper_box" indicator-dots="{{ indicatorDots }}" autoplay="{{ autoplay }}" current="{{ current }}" interval="{{ interval }}" duration="{{ duration }}" circular="{{ circular }}" bindchange="swiperchange">
     <block wx:for="{{ images }}">
@@ -9,7 +10,19 @@
     </block>
 </swiper>
 
-<view class="weui-search-bar">
+<view class="pages-container"> 
+ <scroll-view scroll-y="true" class="pages-wrapper"> 
+  <view wx:for="{{pageItems}}" wx:key="{{text}}"> 
+   <view class="pages-row"> 
+    <template is="cell" data="{{...item[0],cellHeight}}" /> 
+    <template is="cell" data="{{...item[1],cellHeight}}" /> 
+    <template is="cell" data="{{...item[2],cellHeight}}" /> 
+   </view> 
+  </view> 
+ </scroll-view> 
+</view>
+
+<!--<view class="weui-search-bar">
     <view class="weui-search-bar__form">
         <view class="weui-search-bar__box">
             <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
@@ -20,7 +33,6 @@
             <view class="weui-search-bar__text">搜索</view>
         </label>
     </view>
-</view>
-
+</view>-->
 <template is="nav" data="{{ navList, activeIndex }}"/>
-<template is="list" data="{{ goods, prompt }}"/>
+<!--<template is="list" data="{{ goods, prompt }}"/>-->

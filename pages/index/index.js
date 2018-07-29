@@ -1,4 +1,5 @@
 const App = getApp()
+var routes = require('routes');
 
 Page({
     data: {
@@ -17,6 +18,9 @@ Page({
             '../../assets/images/banner/banner4.jpg',
 	    ],
         goods: {},
+        cellHeight: '120px', 
+        pageItems: [],
+
         prompt: {
             hidden: !0,
         },
@@ -28,9 +32,41 @@ Page({
         this.banner = App.HttpResource('/banner/:id', {id: '@id'})
         this.goods = App.HttpResource('/goods/:id', {id: '@id'})
         this.classify = App.HttpResource('/classify/:id', {id: '@id'})
-
-	      //this.getBanners()
-        this.getClassify()
+        this.getCell()
+	    //this.getBanners()
+        //this.getClassify()
+    },
+    getCell() {
+        var that = this
+        //调用应用实例的方法获取全局数据  
+        var pageItems = []; 
+        var row = []; 
+        var len = routes.PageItems.length;//重组PageItems 
+        len = Math.floor((len + 2) / 3) * 3; 
+        for (var i = 0; i < len; i++) { 
+            if ((i + 1) % 3 == 0) { 
+                row.push(routes.PageItems[i]); 
+                pageItems.push(row); 
+                row = []; 
+                continue; 
+            } 
+            else { 
+                row.push(routes.PageItems[i]); 
+            } 
+        }
+        wx.getSystemInfo({ 
+            success: function (res) { 
+             var windowWidth = res.windowWidth; 
+             that.setData({ 
+              cellHeight: (windowWidth / 3) + 'px'
+             }) 
+            }, 
+            complete: function () { 
+             that.setData({ 
+              pageItems: pageItems 
+             }) 
+            } 
+        })
     },
     initData() {
         const type = this.data.goods.params && this.data.goods.params.type || ''
